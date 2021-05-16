@@ -14,49 +14,7 @@
 </script>
 
 <!-- For all browsers -->
-<!-- <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"> -->
-<!-- <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="{{ '/assets/css/main_dark.css' | relative_url }}">
-<link rel="stylesheet" media="not(prefers-color-scheme: dark)" href="{{ '/assets/css/main.css' | relative_url }}"> -->
-<!-- <link rel="stylesheet" media="(min-width: 400px)" href="{{ '/assets/css/main_dark.css' | relative_url }}">
-<link rel="stylesheet" media="(max-width: 400px)" href="{{ '/assets/css/main.css' | relative_url }}"> -->
-<!-- <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="{{ '/assets/css/main_dark.css' | relative_url }}">
-<link rel="stylesheet" media="(prefers-color-scheme: light)" href="{{ '/assets/css/main.css' | relative_url }}"> -->
-
-<script>
-  if (!document.getElementById("dark-theme")) {
-    var darkTheme = document.createElement('link')
-    darkTheme.id = "dark-theme"
-    darkTheme.rel = "stylesheet"
-    darkTheme.href = "{{ '/assets/css/main_dark.css' | relative_url }}"
-    document.head.appendChild(darkTheme);
-  }
-  // darkTheme.setAttribute('rel', 'stylesheet')
-  // darkTheme.setAttribute('type', 'text/css')
-  // darkTheme.setAttribute("href", href="{{ '/assets/css/main_dark.css' | relative_url }}")
-
-  if (!document.getElementById("default-theme")) {
-    var defaultTheme = document.createElement('link')
-    defaultTheme.id = "default-theme"
-    defaultTheme.rel = "stylesheet"
-    defaultTheme.href = "{{ '/assets/css/main.css' | relative_url }}"
-    document.head.appendChild(defaultTheme);
-  }
-  // var defaultTheme = document.createElement('link')
-  // defaultTheme.setAttribute('rel', 'stylesheet')
-  // defaultTheme.setAttribute('type', 'text/css')
-  // defaultTheme.setAttribute("href", href="{{ '/assets/css/main.css' | relative_url }}")
-
-  // if (matchMedia('(prefers-color-scheme: dark)').matches) {
-  //   darkTheme.disabled = false
-  //   defaultTheme.disabled = true
-  // } else {
-  //   darkTheme.disabled = true
-  //   defaultTheme.disabled = false
-  // }
-  function changeTheme() {
-    defaultTheme.disabled = !defaultTheme.disabled
-  }
-</script>
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
 
