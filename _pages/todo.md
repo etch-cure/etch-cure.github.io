@@ -20,3 +20,6 @@ tags:
 - [ ] typescript enum 관련 포스팅
 - [ ] d.ts의 ambient(global)과 local 관련 포스팅
 <https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts>
+
+- [ ] 다크테마 적용 방법 포스팅
+<https://codepen.io/mallendeo/pen/eLIiG>
