@@ -2,7 +2,7 @@
 title:  "블로그 할일"
 permalink: /todo/
 layout: single
-
+published: false
 categories:
   - Blog
 tags:
