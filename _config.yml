@@ -15,6 +15,9 @@ remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 dark_theme_toggle        : true
 
+head_scripts:
+  - /assets/js/custom/dark-theme.js
+
 # Site Settings
 locale                   : "ko-KR"
 title                    : "ryumin"
@@ -283,6 +286,3 @@ defaults:
       related: true
       toc: true
       toc_sticky: true
-
-after_footer_scripts:
-  - /assets/js/custom/dark-theme.js

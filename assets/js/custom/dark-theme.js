@@ -1,21 +1,32 @@
-if (!document.getElementById("dark-theme")) {
-    var darkTheme = document.createElement('link')
-    darkTheme.id = "dark-theme"
-    darkTheme.rel = "stylesheet"
-    darkTheme.href = "/assets/css/main_dark.css"
-    document.head.appendChild(darkTheme);
-}
+var defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href))
+var darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href))
+var changeTheme
 
-if (matchMedia('(prefers-color-scheme: dark)').matches) {
-    let toggleThemeBtn = document.getElementById("toggle_dark_theme")
-    if (toggleThemeBtn) {
-        toggleThemeBtn.checked = true
+if (darkTheme) {
+    const darkModeCookie = document.cookie
+        .split('; ')
+        .find(co => co.startsWith('MDARK='))
+    if (darkModeCookie !== undefined) {
+        const dmodeValue = darkModeCookie.split('=')[1]
+        darkTheme.disabled = dmodeValue !== 'Y'
+        defaultTheme.disabled = dmodeValue === 'Y'
+    } else {
+        if (matchMedia('(prefers-color-scheme: dark)').matches) {
+            let toggleThemeBtn = document.getElementById("toggle_dark_theme")
+            if (toggleThemeBtn) {
+                toggleThemeBtn.checked = true
+            }
+            darkTheme.disabled = false
+            defaultTheme.disabled = true
+        } else {
+            darkTheme.disabled = true
+            defaultTheme.disabled = false
+        }
+        document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
     }
-    darkTheme.disabled = false
-} else {
-    darkTheme.disabled = true
-}
-
-function changeTheme() {
-    darkTheme.disabled = !darkTheme.disabled
+    changeTheme = () => {
+        darkTheme.disabled = !darkTheme.disabled
+        defaultTheme.disabled = !darkTheme.disabled
+        document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
+    }
 }
