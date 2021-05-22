@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "yzhang.markdown-all-in-one",
+        "dedsec727.jekyll-run",
+        "eliostruyf.vscode-front-matter",
+        "davidanson.vscode-markdownlint"
+    ]
+}
