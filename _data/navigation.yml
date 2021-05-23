@@ -1,5 +1,9 @@
 # main links
 main:
+  - title: "Series"
+    url: series
+  - title: "Categories"
+    url: categories
   - title: "About"
     url: about
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
@@ -11,3 +15,9 @@ main:
   #   url: /sitemap/
   # - title: "ToDo"
   #  url: todo
+
+series:
+  - title: 시리즈
+    children: 
+      - title: 블로그 운영
+        url: /series/blog/
