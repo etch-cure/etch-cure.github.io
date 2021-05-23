@@ -9,7 +9,7 @@ tags:
   - markdownlint
   - mmistakes/minimal-mistakes
 date: 2021-05-23T06:48:08.791Z
-last_modified_at: 2021-05-23T06:51:25.429Z
+last_modified_at: 2021-05-23T08:14:41.375Z
 ---
 
 github pages를 운영할때 유용한 vscode 플러그인 추천 두번째 포스팅이다.  
