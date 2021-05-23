@@ -1,5 +1,5 @@
 ---
-title: github pages를 운영할때 추천하는 vscode 플러그인 1
+title: Github Pages (github 블로그)를 운영할때 추천하는 vscode 플러그인 1
 excerpt: 'Jekyll Run, Front Matter 라는 vscode 플러그인에 대해 간단한 사용법'
 categories:
   - Blog
@@ -52,7 +52,7 @@ front matter의 내용을 수정해 주는 플러그인이다.
 
 ![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_002828.png)
 
-### 날짜 생성/변경 기능
+### 1. 날짜 생성/변경 기능
 
 여기서 Set Modified date 버튼을 누르거나  
 명령 팔레트(ctrl + shift + p)에 **> Front Matter: Set lastmod date**를 입력하면 현재 시간으로 수정날짜가 생성/변경된다.  
@@ -79,7 +79,7 @@ vs code 확장의 설정에 들어가는 방법은 다른 포스팅을 참고하
 </div>
 </details>
 
-### 기본 문서 생성 기능 (포스팅 생성 기능)
+### 2. 기본 문서 생성 기능 (포스팅 생성 기능)
 
 아래 그림처럼 _post 폴더에 미리 설정해둔 front matter로 파일을 생성하는 기능이다.  
 이 기능은 포스팅을 생성할 때 매우 유용한 것 같다.
@@ -103,5 +103,7 @@ vs code 확장의 설정에 들어가는 방법은 다른 포스팅을 참고하
 </details>
 
 ---
+
+[다음 포스트: 추천 플러그인 2](../github-pages-plugin2/)
 
 마지막으로 이상하거나 이해안되는 것이 있으면 피드백 부탁드립니다.
