@@ -7,7 +7,7 @@ tags:
   - Blog
   - Front Matter
   - Jekyll Run
-  - mmistakes/minimal-mistakes
+  - minimal-mistakes
 date: 2021-05-22T15:41:24.817Z
 last_modified_at: 2021-05-22T15:41:24.817Z
 ---

@@ -7,7 +7,7 @@ tags:
   - Blog
   - Markdown All in One
   - markdownlint
-  - mmistakes/minimal-mistakes
+  - minimal-mistakes
 date: 2021-05-23T06:48:08.791Z
 last_modified_at: 2021-05-23T08:14:41.375Z
 ---
