@@ -1,6 +1,5 @@
 var defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href))
 var darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href))
-var changeTheme
 
 if (darkTheme) {
     const darkModeCookie = document.cookie
@@ -26,9 +25,11 @@ if (darkTheme) {
         toggleThemeBtn.checked = defaultTheme.disabled
     }
 
-    changeTheme = () => {
+    let changeTheme = () => {
         darkTheme.disabled = !darkTheme.disabled
         defaultTheme.disabled = !darkTheme.disabled
         document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
     }
+
+    toggleThemeBtn.addEventListener('click', changeTheme)
 }
