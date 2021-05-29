@@ -22,20 +22,81 @@ last_modified_at: 2021-05-26T15:17:59.540Z
 
 ## 적용기
 
+### 1. _config에 옵션 추가
+
+_config.yml에 다크 모드 토글 버튼에 대한 옵션을 추가한다.
+
+```yml
+dark_theme_toggle        : true
+```
+
+### 2. 토글 버튼 만들기
+
+우선 오른쪽 위에 토글 버튼을 만들어 본다.  
+아래 사이트에서 토글 버튼의 코드를 주었다.  
+[Css 토글 버튼](https://codepen.io/mallendeo/pen/eLIiG)
+
+그리고 아래 파일을 만들어서 넣어 주었다.  
+[_sass/custom/toggle.scss](#--togglescss)
+
+이후에 컴파일에 포함되어야 하기 때문에 minimal-mistakes.scss에서 import 하였다.  
+[_sass/minimal-mistakes.scss](#--minimal-mistakesscss)
+
+### 3. 헤더 커스텀
+
+토글 버튼을 헤더에 넣기 위해 헤더를 커스텀 했다.  
+[_includes/masthead.html](#--mastheadhtml)
+
+결과 잘 적용 됬다.  
+![togglebutton](/assets/image/2021-05-27-toggle-dark-mode/20210529_124250.png)
+
+### 4. 다크 모드 css 만들기
+
+minimal-mistakes의 테마적용 방식을 우선 살펴 보있다.  
+sass의 변수를 통한 방법으로 적용되어있다.  
+[_sass/minimal-mistakes/skins/_dark.scss](https://github.com/etch-cure/etch-cure.github.io/blob/a11415e8d8b0b55ef363aa21343aabaeb2b186cf/_sass/minimal-mistakes/skins/_dark.scss)
+
+그렇다면 테마에 따른 css 변수를 쓴것도 아니고 구분자를 사용한 것도 아니어서
+추가로 메인 css 파일을 만들 수 밖에 없다고 생각했다.  
+(~~더 좋은 방법 있으면 공유 부탁드립니다.~~)
+
+그래서 main.scss파일에서 테마만 바꾼 main_dark.scss 파일을 만들었다.  
+[assets/css/main_dark.scss](#--main_darkscss)
+
+"jekyll build"를 통해서 빌드를 해서 확인 해보니 정상적으로 두개의 css 파일이 생성된 것을 확인할 수 있다.  
+
+![togglebutton](/assets/image/2021-05-27-toggle-dark-mode/20210529_131709.png)
+
+### 5. main_dark.css 파일 가지고 오기
+
+head.html에서 main.css를 가지고 오고 난후 main_dark.css를 가지고 오도록 한다.  
+[_includes/head.html](#--headhtml)
+
+### 6. 다크 모드 토글 스크립트 작성
+
+우선 작성한 코드이다.  
+[assets/js/custom/dark-theme.js](#--dark-themejs)
+
+코드 내용을 간략히 설명하면 임포트한 css를 찾고 쿠키와 미디어쿼리를 확인해서
+main.css 혹은 main_dark.css를 disabled 시켜준다.  
+이후 토글 버튼을 찾아서 테마와 상태를 일치시켜주고 클릭 이벤트를 등록 하였다.  
+
+### 7. dark-theme.js 스크립트 가지고 오기
+
+마지막으로 _config.yml파일에 아래 내용을 추가하여 footer에 커스텀 스크립트를 등록한다.
+
+```yml
+footer_scripts:
+  - /assets/js/custom/dark-theme.js
+```
+
 ## 결론
 
-### 1. Git Commit
-
-급한 사람은 아래 두 커밋을 확인하길 바란다. ( ❗ 정리가 안되있어서 복잡하다..)  
-
-- [커밋1](https://github.com/etch-cure/etch-cure.github.io/commit/16b40bbfbd786d410c71232f1e7e0a16b9cd1a30)
-- [커밋2](https://github.com/etch-cure/etch-cure.github.io/commit/2893e613d2d471a4c4631d69421ab6b1dffa0dee)
-
-### 2. 메인 소스
+### 1. 메인 소스
 
 #### - _config.yml
 
-다크 모드 토글 옵션 추가, header에 스크립트 삽입  
+다크 모드 토글 옵션 추가, footer에 스크립트 삽입  
 
 <details>
 <summary>코드 내용</summary>
@@ -44,7 +105,7 @@ last_modified_at: 2021-05-26T15:17:59.540Z
 ```yml
 # _config.yml
 dark_theme_toggle        : true # 다크 모드 토글 기능 추가
-head_scripts:
+footer_scripts:
   - /assets/js/custom/dark-theme.js
 ```
 
@@ -64,7 +125,6 @@ head_scripts:
 
 var defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href))
 var darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href))
-var changeTheme
 
 if (darkTheme) {
     const darkModeCookie = document.cookie
@@ -76,10 +136,6 @@ if (darkTheme) {
         defaultTheme.disabled = dmodeValue === 'Y'
     } else {
         if (matchMedia('(prefers-color-scheme: dark)').matches) {
-            let toggleThemeBtn = document.getElementById("toggle_dark_theme")
-            if (toggleThemeBtn) {
-                toggleThemeBtn.checked = true
-            }
             darkTheme.disabled = false
             defaultTheme.disabled = true
         } else {
@@ -88,12 +144,21 @@ if (darkTheme) {
         }
         document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
     }
-    changeTheme = () => {
+
+    let toggleThemeBtn = document.getElementById("toggle_dark_theme")
+    if (toggleThemeBtn) {
+        toggleThemeBtn.checked = defaultTheme.disabled
+    }
+
+    let changeTheme = () => {
         darkTheme.disabled = !darkTheme.disabled
         defaultTheme.disabled = !darkTheme.disabled
         document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
     }
+
+    toggleThemeBtn.addEventListener('click', changeTheme)
 }
+
 ```
 
 </div>
@@ -102,12 +167,22 @@ if (darkTheme) {
 #### - head.html
 
 다크 모드 토글 옵션이 켜진 경우 css를 가지고옴  
-( ~~*liqid 문법이 적용되서 코드를 올리기 힘들다. 주석처리가 안되네ㅠㅠ*~~ )  
 
 <details>
 <summary>코드 내용</summary>
 <div markdown="1">
-![togglebutton](/assets/image/2021-05-27-toggle-dark-mode/20210527_014302.png)
+
+```md
+<!-- For all browsers -->
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<!-- darkmode css -->
+{% raw %}{% if site.dark_theme_toggle == true %}{% endraw %}
+<link rel="stylesheet" href="{{ '/assets/css/main_dark.css' }}">
+{% raw %}{% endif %}{% endraw %}
+
+<!-- ... -->
+```
+
 </div>
 </details>
 
@@ -134,7 +209,9 @@ main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss
 </div>
 </details>
 
-### 3. 토글 버튼 추가
+### 2. 토글 버튼 추가
+
+해당 토글 버튼의 UI가 싫다면 다른 버튼을 만들고나서 클릭 이벤트를 붙일 곳에 "toggle_dark_theme" 아이디를 붙여주면 된다.  
 
 #### - toggle.scss
 
@@ -223,7 +300,25 @@ minimal-mistakes.scss에 토글 scss 삽입
 <details>
 <summary>코드 내용</summary>
 <div markdown="1">
-![togglebutton](/assets/image/2021-05-27-toggle-dark-mode/20210527_013851.png)
+
+```scss
+/* ... */
+
+/* Components */
+@import "minimal-mistakes/buttons";
+@import "minimal-mistakes/notices";
+@import "minimal-mistakes/masthead";
+@import "minimal-mistakes/navigation";
+@import "minimal-mistakes/footer";
+@import "minimal-mistakes/search";
+@import "minimal-mistakes/syntax";
+
+/* 토글 버튼 스타일 */
+@import "custom/toggle.scss";
+
+/* ... */
+```
+
 </div>
 </details>
 
@@ -234,7 +329,32 @@ minimal-mistakes.scss에 토글 scss 삽입
 <details>
 <summary>코드 내용</summary>
 <div markdown="1">
-![togglebutton](/assets/image/2021-05-27-toggle-dark-mode/20210527_013539.png/)
+
+```md
+
+<!-- ... -->
+
+{% raw %}{% if site.search == true %}{% endraw %}
+<button class="search__toggle" type="button">
+    <span class="visually-hidden">{% raw %}{{ site.data.ui-text[site.locale].search_label | default: "Toggle search" }}{% endraw %}</span>
+    <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+    <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+    </svg>
+</button>
+{% raw %}{% endif %}{% endraw %}
+<!-- 다크 모드 토글 버튼 -->
+{% raw %}{% if site.dark_theme_toggle == true %}{% endraw %}
+<input id="toggle_dark_theme" class="tgl tgl-light" type="checkbox">
+<label for="toggle_dark_theme" class="tgl-btn"></label>
+{% raw %}{% endif %}{% endraw %}
+<button class="greedy-nav__toggle hidden" type="button">
+    <span class="visually-hidden">{% raw %}{{ site.data.ui-text[site.locale].menu_label | default: "Toggle menu" }}{% endraw %}</span>
+    <div class="navicon"></div>
+</button>
+
+<!-- ... -->
+```
+
 </div>
 </details>
 
