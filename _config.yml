@@ -20,10 +20,10 @@ footer_scripts:
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "ryumin"
+title                    : "minha"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "ryumin"
+name                     : "minha"
 description              : "이거 저거 적어두는 개발 노트"
 url                      : "https://etch-cure.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -98,7 +98,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "ryumin"
+  name             : "minha"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : ""
   location         : "South Korea"
