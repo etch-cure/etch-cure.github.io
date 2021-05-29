@@ -12,10 +12,6 @@ if (darkTheme) {
         defaultTheme.disabled = dmodeValue === 'Y'
     } else {
         if (matchMedia('(prefers-color-scheme: dark)').matches) {
-            let toggleThemeBtn = document.getElementById("toggle_dark_theme")
-            if (toggleThemeBtn) {
-                toggleThemeBtn.checked = true
-            }
             darkTheme.disabled = false
             defaultTheme.disabled = true
         } else {
@@ -24,6 +20,12 @@ if (darkTheme) {
         }
         document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
     }
+
+    let toggleThemeBtn = document.getElementById("toggle_dark_theme")
+    if (toggleThemeBtn) {
+        toggleThemeBtn.checked = defaultTheme.disabled
+    }
+
     changeTheme = () => {
         darkTheme.disabled = !darkTheme.disabled
         defaultTheme.disabled = !darkTheme.disabled
