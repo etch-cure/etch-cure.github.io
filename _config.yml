@@ -47,6 +47,8 @@ comments:
   utterances:
     theme                : # "github-light" (default), "github-dark"
     issue_term           : pathname # "pathname" (default), "url", "title", "og:title", "[ENTER TERM HERE]", 
+    repository           : # custom utterances repository
+    label                : Comments # Issue Label
   staticman:
     branch               : # "master"
     endpoint             : # "https://{your Staticman v3 API}/v3/entry/github/"
