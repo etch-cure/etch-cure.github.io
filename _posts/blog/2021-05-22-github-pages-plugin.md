@@ -2,14 +2,15 @@
 title: Github Pages (github 블로그)를 운영할때 추천하는 vscode 플러그인 1
 excerpt: 'Jekyll Run, Front Matter 라는 vscode 플러그인에 대해 간단한 사용법'
 categories:
-  - Blog
+   - Blog
 tags:
-  - Blog
-  - Front Matter
-  - Jekyll Run
-  - minimal-mistakes
+   - Blog
+   - Front Matter
+   - Jekyll Run
+   - minimal-mistakes
 date: 2021-05-22T15:41:24.817Z
-last_modified_at: 2021-05-22T15:41:24.817Z
+last_modified_at: '2021-10-13T15:05:52.500Z'
+draft: true
 ---
 
 github pages를 운영하기 시작하면서 포스팅 하나 쓰려고 하는데 기억해야 될 내용들이 많아서 귀찮았다.
@@ -50,7 +51,7 @@ front matter의 내용을 수정해 주는 플러그인이다.
 
 현재 문서에서 front matter를 분석하면 다음과 같은 화면이 나온다.  
 
-![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_002828.png)
+![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20211013_234511.png)
 
 ### 1. 날짜 생성/변경 기능
 
@@ -82,14 +83,15 @@ vs code 확장의 설정에 들어가는 방법은 다른 포스팅을 참고하
 ### 2. 기본 문서 생성 기능 (포스팅 생성 기능)
 
 아래 그림처럼 _post 폴더에 미리 설정해둔 front matter로 파일을 생성하는 기능이다.  
-이 기능은 포스팅을 생성할 때 매우 유용한 것 같다.
+이 기능은 포스팅을 생성할 때 매우 유용한 것 같다. (*2021-10-13 업데이트*)
 
-![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_011145.png)
+![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20211013_222305.png)
 
-이것을 만드려면 프로젝트 root에 .template폴더 기본 포스팅할 형식을 만들어 두고 사용하면 된다.  
-이때 확장자가 똑같이 생성되므로 .md를 확장자로 해두면 된다.  
+이것을 사용하려면 ctrl + shift + p를 눌러서 **Front matter: Initialize project**를 하면 ./frontmatter/templates 폴더에 article.md 파일이 생긴다.
 
-![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_011712.png)
+![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20211013_231308.png)
+
+해당 파일이 아티클을 만들때의 템플릿이 되므로 수정하여 사용하면 된다.
 
 <details>
 <summary>내 기본 post의 front matter</summary>
@@ -97,7 +99,7 @@ vs code 확장의 설정에 들어가는 방법은 다른 포스팅을 참고하
 
 내 테마에서 date는 필요없지만 넣어두었고 last_modified_at은 마지막 수정날짜가 있어야 좋을 것 같아서 넣어두었다 나머지 설정값은 다 _config.yml의 default에 있다.
 
-![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_012350.png)
+![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20211014_000305.png)
 ![Front Matter](/assets/image/2021-05-22-github-pages-plugin/20210523_012441.png)
 </div>
 </details>
