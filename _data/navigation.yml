@@ -21,3 +21,5 @@ series:
     children: 
       - title: 블로그 운영
         url: /series/blog/
+      - title: Effective C++ 리뷰
+        url: /series/effective_cpp/
