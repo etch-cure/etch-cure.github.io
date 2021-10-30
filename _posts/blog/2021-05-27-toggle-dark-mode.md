@@ -2,14 +2,15 @@
 title: minimal-mistakes 테마 다크 모드 토글 적용 - Github Pages 운영
 excerpt: Github Pages의 minimal-mistakes 테마에 다크 모드 적용기
 categories:
-  - Blog
+    - Blog
 tags:
-  - Blog
-  - Dark Mode
-  - Jekyll
-  - minimal-mistakes
+    - Blog
+    - Dark Mode
+    - Github Page
+    - Jekyll
+    - minimal-mistakes
 date: 2021-05-26T15:16:52.635Z
-last_modified_at: 2021-05-26T15:17:59.540Z
+last_modified_at: '2021-10-30T09:08:03.919Z'
 ---
 
 초기에 Gitgub Pages를 구축할 때 특별히 테마를 생각하지 않고 stars가 가장 많은 테마로 골랐다.  
@@ -35,12 +36,13 @@ dark_theme_toggle        : true
 우선 오른쪽 위에 토글 버튼을 만들어 본다.  
 아래 사이트에서 토글 버튼의 코드를 주었다.  
 [Css 토글 버튼](https://codepen.io/mallendeo/pen/eLIiG)
+*현재는 코드를 수정하여 적용하였음*
 
 그리고 아래 파일을 만들어서 넣어 주었다.  
 [_sass/custom/toggle.scss](#--togglescss)
 
-이후에 컴파일에 포함되어야 하기 때문에 minimal-mistakes.scss에서 import 하였다.  
-[_sass/minimal-mistakes.scss](#--minimal-mistakesscss)
+이후에 컴파일에 포함되어야 하기 때문에 customOverride.scss에서 import main.scss에 포함되게 하였다.  
+[_sass/custom/customOverride.scss](#--customoverridescss)
 
 ### 3. 헤더 커스텀
 
@@ -56,9 +58,36 @@ minimal-mistakes의 테마적용 방식을 우선 살펴 보있다.
 sass의 변수를 통한 방법으로 적용되어있다.  
 [_sass/minimal-mistakes/skins/_dark.scss](https://github.com/etch-cure/etch-cure.github.io/blob/a11415e8d8b0b55ef363aa21343aabaeb2b186cf/_sass/minimal-mistakes/skins/_dark.scss)
 
-그렇다면 테마에 따른 css 변수를 쓴것도 아니고 구분자를 사용한 것도 아니어서
+*skin에 있는 변수를 css 변수로 바꾸어 css를 만들어 보려 했지만...*
+<details>
+<summary>매우 어렵다는 결론을 냈다.</summary>
+<div markdown="1">
+스킨파일의 색깔 변수를 @mixin을 통해 scss변수를 override해서 css 변수로 바꾸어보았지만  
+목표:
+```scss
+// _dark.scss
+$background-color: #252a34 !default;
+
+// @mixin을 통한 결과
+[data-theme="dark"] {
+    --mh-background-color: #123456;
+}
+$background-color: var(--mh-background-color) !global;
+
+// _variable.scss의 !default 변수 무시
+$background-color: #fff !default;
+
+```
+
+minimal-mistakes내부에서 색깔 함수(ex. mix, red...)를 사용하고 있다.  
+*이거 해보려고 삽질했다... 덕분에 scss를 공부하긴 했다.*
+</div>
+</details>
+<br>
+
+그렇다면 테마에 따른 [css 변수](https://developer.mozilla.org/ko/docs/Web/CSS/Using_CSS_custom_properties)를 쓴것도 아니고 [css 선택자](https://developer.mozilla.org/ko/docs/Web/CSS/:root)를 사용한 것도 아니어서
 추가로 메인 css 파일을 만들 수 밖에 없다고 생각했다.  
-(~~더 좋은 방법 있으면 공유 부탁드립니다.~~)
+(*css 커스텀 한 분들은 [이분 블로그](https://github.com/habijung/habijung.github.io)참고하세요*)  
 
 그래서 main.scss파일에서 테마만 바꾼 main_dark.scss 파일을 만들었다.  
 [assets/css/main_dark.scss](#--main_darkscss)
@@ -77,7 +106,7 @@ head.html에서 main.css를 가지고 오고 난후 main_dark.css를 가지고 �
 우선 작성한 코드이다.  
 [assets/js/custom/dark-theme.js](#--dark-themejs)
 
-코드 내용을 간략히 설명하면 임포트한 css를 찾고 쿠키와 미디어쿼리를 확인해서
+코드 내용을 간략히 설명하면 임포트한 css를 찾고 로컬 스토리지와 미디어쿼리를 확인해서
 main.css 혹은 main_dark.css를 disabled 시켜준다.  
 이후 토글 버튼을 찾아서 테마와 상태를 일치시켜주고 클릭 이벤트를 등록 하였다.  
 
@@ -86,9 +115,21 @@ main.css 혹은 main_dark.css를 disabled 시켜준다.
 마지막으로 _config.yml파일에 아래 내용을 추가하여 footer에 커스텀 스크립트를 등록한다.
 
 ```yml
-footer_scripts:
+after_footer_scripts:
   - /assets/js/custom/dark-theme.js
 ```
+
+### 8. 토글 버튼에 이미지 로드하기
+
+구글 웹폰트중 [아이콘](https://fonts.google.com/icons)을 import한다.  
+[_sass/custom/customImport.scss](#--customimportscss)
+
+아이콘을 적용할 태그에 "material-icons-sharp" css 클래스를 적용하고  
+[_includes/masthead.html](#--mastheadhtml)  
+css에 content에 테마에 따른 선택자에 "brightness_7"(라이트) 또는 "brightness_4"(다크)를 넣어주면 된다.  
+[_sass/custom/toggle.scss](#--togglescss)
+
+![토글이미지 적용](/assets/image/2021-05-27-toggle-dark-mode/20211030_171655.png)
 
 ## 결론
 
@@ -105,7 +146,7 @@ footer_scripts:
 ```yml
 # _config.yml
 dark_theme_toggle        : true # 다크 모드 토글 기능 추가
-footer_scripts:
+after_footer_scripts:
   - /assets/js/custom/dark-theme.js
 ```
 
@@ -122,38 +163,33 @@ footer_scripts:
 
 ```js
 /* assets/js/custom/dark-theme.js */
+const defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href));
+const darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href));
 
-var defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href))
-var darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href))
+let setDarkMode = (isDark) => {
+    darkTheme.disabled = isDark !== true;
+    defaultTheme.disabled = isDark === true;
+    localStorage.setItem('theme', isDark ? 'dark' : 'default');
+}
 
 if (darkTheme) {
-    const darkModeCookie = document.cookie
-        .split('; ')
-        .find(co => co.startsWith('MDARK='))
-    if (darkModeCookie !== undefined) {
-        const dmodeValue = darkModeCookie.split('=')[1]
-        darkTheme.disabled = dmodeValue !== 'Y'
-        defaultTheme.disabled = dmodeValue === 'Y'
+    let currentTheme = localStorage.getItem('theme');
+    let isDarkMode = false;
+    if (currentTheme) {
+        isDarkMode = currentTheme === 'dark';
     } else {
-        if (matchMedia('(prefers-color-scheme: dark)').matches) {
-            darkTheme.disabled = false
-            defaultTheme.disabled = true
-        } else {
-            darkTheme.disabled = true
-            defaultTheme.disabled = false
-        }
-        document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
+        isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
     }
+
+    setDarkMode(isDarkMode);
 
     let toggleThemeBtn = document.getElementById("toggle_dark_theme")
     if (toggleThemeBtn) {
-        toggleThemeBtn.checked = defaultTheme.disabled
+        toggleThemeBtn.checked = isDarkMode
     }
 
-    let changeTheme = () => {
-        darkTheme.disabled = !darkTheme.disabled
-        defaultTheme.disabled = !darkTheme.disabled
-        document.cookie = `MDARK=${darkTheme.disabled ? 'N' : 'Y'}; path=/;`
+    let changeTheme = (e) => {
+        setDarkMode(e.target.checked);
     }
 
     toggleThemeBtn.addEventListener('click', changeTheme)
@@ -188,7 +224,7 @@ if (darkTheme) {
 
 #### - main_dark.scss
 
-main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss  
+main_dark.scss를 추가한다. customImport.scss에서 구글 웹폰트를 로드하고 customOverride.scss에서 토글 버튼의 스타일을 추가한다.  파일 위치는 assets/css/main_dark.scss  
 
 <details>
 <summary>코드 내용</summary>
@@ -201,8 +237,12 @@ main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss
 
 @charset "utf-8";
 
+@import "custom/customImport.scss";
+
 @import "minimal-mistakes/skins/{{ 'dark' }}";
 @import "minimal-mistakes"; // main partials
+
+@import "custom/customOverride.scss";
 
 ```
 
@@ -222,24 +262,10 @@ main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss
 <div markdown="1">
 
 ```scss
-.tgl {
+.mh_toogle {
     display: none;
-
-    // add default box-sizing for this scope
-    &,
-    &:after,
-    &:before,
-    & *,
-    & *:after,
-    & *:before,
-    & + .tgl-btn {
+    + .mh_toggle_btn {
         box-sizing: border-box;
-        &::selection {
-            background: none;
-        }
-    }
-
-    + .tgl-btn {
         outline: 0;
         display: block;
         width: 3em;
@@ -247,44 +273,37 @@ main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss
         position: relative;
         cursor: pointer;
         user-select: none;
-        &:after,
-        &:before {
-            position: relative;
-            display: block;
-            content: "";
-            width: 50%;
-            height: 100%;
-        }
-
-        &:after {
-            left: 0;
-        }
-
-        &:before {
-            display: none;
-        }
-    }
-
-    &:checked + .tgl-btn:after {
-        left: 50%;
-    }
-}
-
-.tgl-light {
-    + .tgl-btn {
-        background: lightgray;
         border-radius: 1.5em;
         padding: 2px;
         transition: all 0.4s ease;
+        font-size: 1em;
+
         &:after {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            height: 100%;
             border-radius: 50%;
+            transition: all 0.4s ease;
+            color: gray;
             background: white;
-            transition: all 0.2s ease;
+        }
+
+        background: lightgray;
+        &:after {
+            left: 0;
+            content: "brightness_7";
         }
     }
 
-    &:checked + .tgl-btn {
+    &:checked + .mh_toggle_btn {
         background: gray;
+        &:after {
+            left: 50%;
+            content: "brightness_4";
+        }
     }
 }
 
@@ -293,29 +312,35 @@ main_dark.scss를 추가한다. 파일 위치는 assets/css/main_dark.scss
 </div>
 </details>
 
-#### - minimal-mistakes.scss
+#### - customImport.scss
 
-minimal-mistakes.scss에 토글 scss 삽입  
-
+customImport.scss에서 구글 웹폰트중에서 아이콘을 로드  
+이후 해당 파일을 main.scss 와 main_dark.scss에서 import 하면 된다.  
 <details>
 <summary>코드 내용</summary>
 <div markdown="1">
 
 ```scss
-/* ... */
+/* font */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Sharp');
 
-/* Components */
-@import "minimal-mistakes/buttons";
-@import "minimal-mistakes/notices";
-@import "minimal-mistakes/masthead";
-@import "minimal-mistakes/navigation";
-@import "minimal-mistakes/footer";
-@import "minimal-mistakes/search";
-@import "minimal-mistakes/syntax";
+```
 
-/* 토글 버튼 스타일 */
-@import "custom/toggle.scss";
+</div>
+</details>
 
+#### - customOverride.scss
+
+customOverride.scss에서 toggle.scss 삽입  
+이후 해당 파일을 main.scss 와 main_dark.scss에서 import 하면 된다.  
+<details>
+<summary>코드 내용</summary>
+<div markdown="1">
+
+```scss
+@import "./toggle.scss";
+@import "./summary.scss";
 /* ... */
 ```
 
@@ -344,8 +369,8 @@ minimal-mistakes.scss에 토글 scss 삽입
 {% raw %}{% endif %}{% endraw %}
 <!-- 다크 모드 토글 버튼 -->
 {% raw %}{% if site.dark_theme_toggle == true %}{% endraw %}
-<input id="toggle_dark_theme" class="tgl tgl-light" type="checkbox">
-<label for="toggle_dark_theme" class="tgl-btn"></label>
+<input id="toggle_dark_theme" class="mh_toogle" type="checkbox">
+<label for="toggle_dark_theme" class="material-icons-sharp mh_toggle_btn"></label>
 {% raw %}{% endif %}{% endraw %}
 <button class="greedy-nav__toggle hidden" type="button">
     <span class="visually-hidden">{% raw %}{{ site.data.ui-text[site.locale].menu_label | default: "Toggle menu" }}{% endraw %}</span>
