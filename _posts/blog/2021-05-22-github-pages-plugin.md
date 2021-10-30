@@ -10,7 +10,7 @@ tags:
    - minimal-mistakes
 date: 2021-05-22T15:41:24.817Z
 last_modified_at: '2021-10-13T15:05:52.500Z'
-draft: true
+draft: false
 ---
 
 github pages를 운영하기 시작하면서 포스팅 하나 쓰려고 하는데 기억해야 될 내용들이 많아서 귀찮았다.
