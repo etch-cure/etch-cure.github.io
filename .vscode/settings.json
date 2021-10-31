@@ -1,6 +1,4 @@
 {
-  "frontMatter.content.autoUpdateDate": false,
-  "frontMatter.content.fmHighlight": false,
   "[markdown]": {
     "editor.fontSize": 14,
     "editor.lineHeight": 26,
@@ -10,5 +8,5 @@
     "editor.quickSuggestions": false,
     "editor.minimap.enabled": false
   },
-  "frontMatter.preview.host": "http://127.0.0.1:4000/"
+  "frontMatter.preview.host": ""
 }

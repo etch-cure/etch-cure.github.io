@@ -5,5 +5,8 @@
       "title": "_posts",
       "path": "./_posts"
     }
-  ]
+  ],
+  "frontMatter.content.autoUpdateDate": true,
+  "frontMatter.content.fmHighlight": false,
+  "frontMatter.preview.host": "http://127.0.0.1:4000/"
 }
