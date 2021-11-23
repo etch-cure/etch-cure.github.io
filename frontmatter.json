@@ -4,6 +4,10 @@
     {
       "title": "_posts",
       "path": "./_posts"
+    },
+    {
+      "title": "reveiw",
+      "path": "d:/code/블로그/_posts/reveiw"
     }
   ],
   "frontMatter.content.autoUpdateDate": true,
