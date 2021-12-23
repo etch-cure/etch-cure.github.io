@@ -3,14 +3,13 @@ title: Effective C++ 리뷰 (1장 ~ 2장)
 slug: effective-cpp-review1
 excerpt: Effective C++의 1장 ~ 2장을 읽고 요약했다.
 date: '2021-10-25T16:19:27.960Z'
-last_modified_at: '2021-10-31T08:28:47.229Z'
+last_modified_at: '2021-12-22T08:01:08.335Z'
 draft: false
 tags:
   - C++
   - Effective C++
 categories:
   - C++
-  - Effective C++
 ---
 
 ## 1장. C++에 왔으면 C++의 법에 따릅시다

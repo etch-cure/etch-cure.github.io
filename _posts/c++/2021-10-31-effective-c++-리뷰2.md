@@ -10,7 +10,6 @@ tags:
   - Effective C++
 categories:
   - C++
-  - Effective C++
 ---
 
 ## 3장. 자원 관리
