@@ -10,7 +10,7 @@ tags:
     - Jekyll
     - minimal-mistakes
 date: 2021-05-26T15:16:52.635Z
-last_modified_at: '2021-10-30T09:08:03.919Z'
+last_modified_at: '2021-12-29T03:21:49.012Z'
 ---
 
 초기에 Gitgub Pages를 구축할 때 특별히 테마를 생각하지 않고 stars가 가장 많은 테마로 골랐다.  
@@ -240,6 +240,33 @@ main_dark.scss를 추가한다. customImport.scss에서 구글 웹폰트를 로�
 @import "custom/customImport.scss";
 
 @import "minimal-mistakes/skins/{{ 'dark' }}";
+@import "minimal-mistakes"; // main partials
+
+@import "custom/customOverride.scss";
+
+```
+
+</div>
+</details>
+
+#### - main.scss
+
+main_dark.scss에서 한것 처럼 customImport.scss와 customOverride.scss를 Import한다.
+
+<details>
+<summary>코드 내용</summary>
+<div markdown="1">
+
+```scss
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+@import "custom/customImport.scss";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
 @import "custom/customOverride.scss";
