@@ -4,6 +4,12 @@ const darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.tes
 let setDarkMode = (isDark) => {
     darkTheme.disabled = isDark !== true;
     defaultTheme.disabled = isDark === true;
+
+    if (window['customUtterances']) {
+        const customUtterances = window['customUtterances'];
+        customUtterances.onChange(isDark ? customUtterances.darkTheme : customUtterances.theme);
+    }
+
     localStorage.setItem('theme', isDark ? 'dark' : 'default');
 }
 
